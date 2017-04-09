@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Resume Generator</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/sidenav.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="./js/sidenav.js"></script>
+  <style>
+    body {
+      position: relative;
+    }
+    
+    .content-con {
+      margin-top: 60px;
+    }
+    
+    .form-con {
+      padding-top: 30px;
+      max-height: 50%;
+    }
+  </style>
+  <script>
+    function remove(ele) {
+      ele.remove();
+    }
+
+    function addSkill() {
+      console.log("hi");
+      var skill = $("#skill").val();
+      if (skill != "")
+        $("#skills-list").append("<button type='button' onclick='remove(this)' class='btn btn-default'>" + skill +
+          "&nbsp&nbsp&nbsp<span class='glyphicon glyphicon-remove'></span></button>");
+    }
+
+    function addEdu() {
+      var course = $("#course").val();
+      var insti = $("#institute").val();
+      var grade = $("#grade").val();
+      if (course != "" && insti != "" && grade != "")
+        $("#edu-list").append("<h5><button type='button' onclick='remove(this)' class='btn btn-default'>" + course +
+          "," +
+          insti + "," + grade +
+          "&nbsp&nbsp&nbsp<span class='glyphicon glyphicon-remove'></span></button></h5>");
+    }
+
+    function addActivity() {
+      var act = $("#activity").val();
+      if (act != "")
+        $("#activities-list").append("<h5><button type='button' onclick='remove(this)' class='btn btn-default'>" + act +
+          "&nbsp&nbsp&nbsp<span class='glyphicon glyphicon-remove'></span></button></h5>");
+    }
+  </script>
+</head>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+  <!-- wrapper -->
+  <div id="wrapper" class="toggled">
+    <div class="overlay"></div>
+
+    <!-- Sidebar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+      <ul class="nav sidebar-nav">
+        <li class="sidebar-brand">
+          <a href="#">Resume Generator</a>
+        </li>
+        <li>
+          <a href="#personal">Personal Details</a>
+        </li>
+        <li>
+          <a href="#skills">Skills</a>
+        </li>
+        <li>
+          <a href="#edu">Education</a>
+        </li>
+        <li>
+          <a href="#activities">Activities</a>
+        </li>
+        <li>
+          <a href="#achievements">Achievements</a>
+        </li>
+        <!--<li class="text-center">
+          <button class="btn btn-default">Generate</button>
+        </li>-->
+      </ul>
+    </nav>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <!-- <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+    			<span class="hamb-middle"></span>
+				<span class="hamb-bottom"></span>
+            </button> -->
+      <!-- container -->
+      <div class="container">
+        <form class="form-horizontal" action="./create" method="GET">
+          <div class="row">
+            <div class="col-lg-8 col-lg-offset-1">
+              <div class="text-center">
+                <h1>Resume Generator</h1>
+              </div>
+              <div id="personal">
+                <h2>Personal Details</h2>
+                <hr>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="fname" id="fname" placeholder="Full Name">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Mobile">
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control col-sm-2" name="email" id="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                  <textarea type="text" rows="5" name="cobj" class="form-control col-sm-2" name="email" id="email" placeholder="Describe your Career Objective"></textarea>
+                </div>
+              </div>
+              <br>
+              <br>
+              <div id="skills">
+                <h2>Skills</h2>
+                <hr>
+                <div name="skills" id="skills-list">
+                </div>
+                <br>
+                <div class="form-group">
+                  <div class="col-sm-4">
+                    <input name="skill1" value="C programming" type="text" class="form-control" id="skill" placeholder="Enter skill">
+                  </div>
+                  <div class="col-sm-4">
+                    <input name="skill2" value="C++ programming" type="text" class="form-control" id="skill" placeholder="Enter skill">
+                  </div>
+                  <div class="col-sm-4">
+                    <input name="skill3" value="Java" type="text" class="form-control" id="skill" placeholder="Enter skill">
+                  </div>
+                  <br>
+                  <br>
+                  <br>
+                  <div class="col-sm-4">
+                    <input name="skill4" value="Self Learner" type="text" class="form-control" id="skill" placeholder="Enter skill">
+                  </div>
+                  <div class="col-sm-4">
+                    <input name="skill5" value="Planning and organizing" type="text" class="form-control" id="skill" placeholder="Enter skill">
+                  </div>
+                  <div class="col-sm-4">
+                    <input name="skill6" value="Adaptive" type="text" class="form-control" id="skill" placeholder="Enter skill">
+                  </div>
+                  <!--<div class="col-sm-4">
+                    <button type="button" class="btn btn-default" onclick="addSkill()">Add</button>
+                  </div>-->
+                </div>
+              </div>
+              <div id="edu">
+                <h2>Education</h2>
+                <hr>
+                <div id="edu-list">
+                </div>
+                <br>
+                <div class="form-group">
+                  <label>University</label>
+                  <div class="col-sm-3">
+                    <input name="course1" value="B Tech" type="text" class="form-control" id="course" placeholder="Enter course">
+                  </div>
+                  <div class="col-sm-3">
+                    <input name="inst1" value="CBIT" type="text" class="form-control" id="institute" placeholder="Enter Institute">
+                  </div>
+                  <div class="col-sm-3">
+                    <input name="grade1" value="8.68" type="text" class="form-control" id="grade" placeholder="Enter grade">
+                  </div>
+                  <!--<div class="col-sm-3">
+                    <button type="button" class="btn btn-default" onclick="addEdu()">Add</button>
+                  </div>-->
+                </div>
+                <div class="form-group">
+                  <label>Intermediate</label>
+                  <div class="col-sm-3">
+                    <input name="course2" value="Intermediate" type="text" class="form-control" id="course" placeholder="Enter course">
+                  </div>
+                  <div class="col-sm-3">
+                    <input name="inst2" value="Narayana Junior College" type="text" class="form-control" id="institute" placeholder="Enter Institute">
+                  </div>
+                  <div class="col-sm-3">
+                    <input name="grade2" value="960" type="text" class="form-control" id="grade" placeholder="Enter grade">
+                  </div>
+                  <!--<div class="col-sm-3">
+                    <button type="button" class="btn btn-default" onclick="addEdu()">Add</button>
+                  </div>-->
+                </div>
+                <div class="form-group">
+                  <label>X class</label>
+                  <div class="col-sm-3">
+                    <input name="course3" value="X class" type="text" class="form-control" id="course" placeholder="Enter course">
+                  </div>
+                  <div class="col-sm-3">
+                    <input name="inst3" value="Sri Chaitanya techno school" type="text" class="form-control" id="institute" placeholder="Enter Institute">
+                  </div>
+                  <div class="col-sm-3">
+                    <input name="grade3" value="9.7" type="text" class="form-control" id="grade" placeholder="Enter grade">
+                  </div>
+                  <!--<div class="col-sm-3">
+                    <button type="button" class="btn btn-default" onclick="addEdu()">Add</button>
+                  </div>-->
+                </div>
+              </div>
+              <div id="activities">
+                <h2>Activities / Invovlement</h2>
+                <hr>
+                <div id="activities-list">
+                </div>
+                <br>
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <input name="activity1" value="Fan of friends tv Series" type="text" class="form-control" id="activity" placeholder="Enter">
+                  </div>
+                  <br><br>
+                  <div class="col-sm-12">
+                    <input name="activity2" value="Member of this" type="text" class="form-control" id="activity" placeholder="Enter">
+                  </div>
+                  <br><br>
+                  <div class="col-sm-12">
+                    <input name="activity3" value="Member of that" type="text" class="form-control" id="activity" placeholder="Enter">
+                    <br><br>
+                  </div>
+                  <!--<div class="col-sm-4">
+                    <button type="button" class="btn btn-default" onclick="addActivity()"><span class='glyphicon glyphicon-plus'></span></button>
+                  </div>-->
+                </div>
+              </div>
+              <div id="achievements">
+                <h2>Achievements</h2>
+                <hr>
+                <div id="achievements-list">
+                </div>
+                <br>
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <input name="achievement1" value="Being Alive" type="text" class="form-control" id="achievement" placeholder="Enter">
+                  </div>
+                  <br><br>
+                  <div class="col-sm-12">
+                    <input name="achievement2" value="Living Happily" type="text" class="form-control" id="achievement" placeholder="Enter">
+                  </div>
+                  <br><br>
+                  <div class="col-sm-12">
+                    <input name="achievement3" value="Not worrying of Future" type="text" class="form-control" id="achievement" placeholder="Enter">
+                    <br><br>
+                  </div>
+                  <!--<div class="col-sm-4">
+                    <button type="button" class="btn btn-default" onclick="addActivity()"><span class='glyphicon glyphicon-plus'></span></button>
+                  </div>-->
+                </div>
+              </div>
+              <div class="form-group text-center">
+                <div class="col-sm-12">
+                  <input class="btn btn-success" type="submit" name="submit" value="Generate" />
+                    <br><br>
+                    <br><br>
+                </div>
+              </div>
+            </div>
+            <!-- col-lg-8 -->
+          </div>
+          <!-- row -->
+        </form>
+      </div>
+      <!-- container-->
+    </div>
+    <!-- /#page-content-wrapper -->
+  </div>
+  <!-- /#wrapper -->
+
+</body>
+
+</html>

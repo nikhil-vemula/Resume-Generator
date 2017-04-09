@@ -1,0 +1,16 @@
+<web-app>
+<display-name>Resume Generator</display-name>
+<description>
+Servlet program to generate resume
+</description>
+<servlet>
+<servlet-name>ResumeGenerator</servlet-name>
+<servlet-class>resume.ResumeCreator</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>ResumeGenerator</servlet-name>
+<url-pattern>/create</url-pattern>
+</servlet-mapping>
+
+</web-app>

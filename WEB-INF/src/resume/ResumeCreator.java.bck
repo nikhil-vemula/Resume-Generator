@@ -1,0 +1,207 @@
+package resume;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.logging.*;
+
+import javax.xml.transform.Result;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.sax.SAXResult;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
+import org.apache.fop.apps.FOPException;
+import org.apache.fop.apps.FOUserAgent;
+import org.apache.fop.apps.Fop;
+import org.apache.fop.apps.FopFactory;
+import org.apache.fop.apps.MimeConstants;
+
+
+public class ResumeCreator {
+	Logger logger = Logger.getLogger(ResumeCreator.class.getName());  
+    FileHandler fileHandler; 
+    
+	public ResumeCreator(){
+		try {   
+	        fileHandler = new FileHandler("./LogFile.log");  
+	        logger.addHandler(fileHandler);
+	        SimpleFormatter formatter = new SimpleFormatter();  
+	        fileHandler.setFormatter(formatter);    
+	    } catch (SecurityException e) {  
+	        e.printStackTrace();  
+	    } catch (IOException e) {  
+	        e.printStackTrace();  
+	    }
+	}
+    public static void main(String[] args) {
+    	ResumeCreator fOPPdfDemo = new ResumeCreator();
+
+    	try {
+			fOPPdfDemo.createXml();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+    	
+        try {
+            fOPPdfDemo.convertToPDF();
+        } catch (FOPException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    	
+    }
+    
+    /**
+     * Method Creates XML from the details provided by the user 
+     * @throws FileNotFoundException 
+     */
+    public void createXml() throws FileNotFoundException{
+    	logger.info("First Log file");
+//    	PrintWriter writer = new PrintWriter(new File("C:/Users/vsnick/Desktop/ResumeHi.xml"));
+    	PrintWriter writer = new PrintWriter(new File("./ResumeHi.xml"));
+    	writer.println("<?xml version=\"1.0\"?>");
+    	writer.println("<resume>");
+    	writer.println("<fullname>Vemula srinivasa nikhil</fullname>");
+    	writer.println("<mobile>9000466890</mobile>");
+    	writer.println("<email>vsrinivasanikhil@gmail.com</email>");
+    	writer.println("<careerobjective>");
+    	writer.println("Seeking a position with a growing organization to  make  a  positive  impact  on  revenues,  and experience long term career growth.");
+    	writer.println("</careerobjective>");
+    	writer.println("<education>");
+    	writer.println("<institute>Chaitanya Bharathi Institute of Technology</institute>");
+    	writer.println("<course>B.E Computer science</course>");
+    	writer.println("<grade>9.0</grade>");
+    	writer.println("</education>");
+    	writer.println("<education>");
+    	writer.println("<institute>Narayana Junior College</institute>");
+    	writer.println("<course>Intermediate</course>");
+    	writer.println("<grade>960</grade>");
+    	writer.println("</education>");
+    	writer.println("<education>");
+    	writer.println("<institute>Sri Chaitanya Techno School</institute>");
+    	writer.println("<course>SSC</course>");
+    	writer.println("<grade>9.7</grade>");
+    	writer.println("</education>");
+    	writer.println("<skill>");
+    	writer.println("<skillname>Drawing</skillname>");
+    	writer.println("</skill>");
+    	writer.println("<skill>");
+    	writer.println("<skillname>Drawing</skillname>");
+    	writer.println("</skill>");
+    	writer.println("<activity>");
+    	writer.println("<name>Boring</name>");
+    	writer.println("</activity>");
+    	writer.println("<activity>");
+    	writer.println("<name>Boring</name>");
+    	writer.println("</activity>");
+    	writer.println("<achievement>");
+    	writer.println("<name>none</name>");
+    	writer.println("</achievement>");
+    	writer.println("<achievement>");
+    	writer.println("<name>none</name>");
+    	writer.println("</achievement>");
+    	writer.println("</resume>");
+    	writer.close();
+    	
+    }
+    /**
+     * Method that will convert the given XML to PDF 
+     * @throws IOException
+     * @throws FOPException
+     * @throws TransformerException
+     */
+    public void convertToPDF()  throws IOException, FOPException, TransformerException {
+        // the XSL FO file
+//        File xsltFile = new File("C:/Users/vsnick/Desktop/style.xsl");
+        File xsltFile = new File("./style.xsl");
+        // the XML file which provides the input
+//        StreamSource xmlSource = new StreamSource(new File("C:/Users/vsnick/Desktop/ResumeHi.xml"));
+        StreamSource xmlSource = new StreamSource(new File("./ResumeHi.xml"));
+        // create an instance of fop factory
+        FopFactory fopFactory = FopFactory.newInstance(new File(".").toURI());
+        // a user agent is needed for transformation
+        FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
+        // Setup output
+        OutputStream out;
+        //out = new java.io.FileOutputStream("C:/Users/vsnick/Desktop/sample.pdf");
+        out = new java.io.FileOutputStream("./sample.pdf");
+    
+        try {
+            // Construct fop with desired output format
+            Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, foUserAgent, out);
+
+            // Setup XSLT
+            TransformerFactory factory = TransformerFactory.newInstance();
+            Transformer transformer = factory.newTransformer(new StreamSource(xsltFile));
+
+            // Resulting SAX events (the generated FO) must be piped through to FOP
+            Result res = new SAXResult(fop.getDefaultHandler());
+
+            // Start XSLT transformation and FOP processing
+            // That's where the XML is first transformed to XSL-FO and then 
+            // PDF is created
+            transformer.transform(xmlSource, res);
+        } finally {
+            out.close();
+        }
+    }
+    
+    /**
+     * This method will convert the given XML to XSL-FO
+     * @throws IOException
+     * @throws FOPException
+     * @throws TransformerException
+     */
+    public void convertToFO()  throws IOException, FOPException, TransformerException {
+        // the XSL FO file
+        File xsltFile = new File("F:\\Temp\\template.xsl");
+        
+        
+        /*TransformerFactory factory = TransformerFactory.newInstance();
+        Transformer transformer = factory.newTransformer(new StreamSource("F:\\Temp\\template.xsl"));*/
+        
+        // the XML file which provides the input
+        StreamSource xmlSource = new StreamSource(new File("F:\\Temp\\Employees.xml"));
+        
+        // a user agent is needed for transformation
+        /*FOUserAgent foUserAgent = fopFactory.newFOUserAgent();*/
+        // Setup output
+        OutputStream out;
+        
+        out = new java.io.FileOutputStream("F:\\Temp\\temp.fo");
+    
+        try {
+            // Setup XSLT
+            TransformerFactory factory = TransformerFactory.newInstance();
+            Transformer transformer = factory.newTransformer(new StreamSource(xsltFile));
+
+            // Resulting SAX events (the generated FO) must be piped through to FOP
+            //Result res = new SAXResult(fop.getDefaultHandler());
+
+            Result res = new StreamResult(out);
+
+            //Start XSLT transformation and FOP processing
+            transformer.transform(xmlSource, res);
+
+
+            // Start XSLT transformation and FOP processing
+            // That's where the XML is first transformed to XSL-FO and then 
+            // PDF is created
+            transformer.transform(xmlSource, res);
+        } finally {
+            out.close();
+        }
+    }
+
+}
